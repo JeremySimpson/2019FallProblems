@@ -28,30 +28,28 @@ bool checkOrder(int * arr, int size)
 #ifdef TEST_SORT
 void ssort(int * arr, int size)
 {
-      int arr[10] = {6, 9, 3, 4, 7, 5, 1, 10, 2, 8};
-    int size = 10;
     int pos1;
     int pos2;
-    int swap;
-    int position;
+    int swapPos;
+    int tempPos;
     
     
     printf("The Sorted Array is:\n");
     
-    for (pos1 = 0; pos1 < (size - 1); pos1++)
+    for (pos1 = 0; pos1 < (size); pos1++)
     {
-        position = pos1;
+        tempPos = pos1;
         
-        for (pos2 = pos1 + 1; pos2 < size ; pos2++)  
+        for (pos2 = pos1 + 1; pos2 <= size ; pos2++)  
         {
-            if (arr[position] > arr[pos2])
-                position = pos2;
+            if (arr[tempPos] > arr[pos2])
+                tempPos = pos2;
         }
-        if (position != pos1)
+        if (tempPos != pos1)
         {
-            swap = arr[pos1];
-            arr[pos1] = arr[position];
-            arr[position] = swap;
+            swapPos = arr[pos1];
+            arr[pos1] = arr[tempPos];
+            arr[tempPos] = swapPos;
         }
     }
     
@@ -62,6 +60,6 @@ void ssort(int * arr, int size)
         pos1 ++;
     }
     
-    return 0;
+    return;
 }
 #endif
