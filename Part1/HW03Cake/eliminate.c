@@ -10,6 +10,9 @@
 #ifdef TEST_ELIMINATE
 // 100% of the score
 void eliminate(int n, int k)
+
+// 100% of the score
+//void eliminate(int n, int k)
 {
   // allocate an arry of n elements
   int * arr = malloc(sizeof(* arr) * n);
@@ -20,23 +23,42 @@ void eliminate(int n, int k)
       fprintf(stderr, "malloc fail\n");
       return;
     }
+    
   // initialize all elements
-
-
+    int i;
+	int ar;
+	int count; 
   
   // counting to k,
   // mark the eliminated element
   // print the index of the marked element
   // repeat until only one element is unmarked
-
-
-
-
-  // print the last one
-
-
-
-
+    //printf("reached 2");
+    for (i = 0; i < n; i++)
+    {
+        arr[i] = i;
+        //printf("%d\n", arr[i]);
+    }
+    
+    i = -1;
+    for (ar = 1; ar <= n; ar++)
+    {
+        
+        count = 0;
+        while (count < k)
+            {
+                i++;
+                i = i % n;
+                if (arr[i] != -1)
+                {
+                    count++;                
+                }
+            
+            } 
+        arr[i] = -1;
+		// print the last one
+		printf("%d\n",i);
+    }
   // release the memory of the array
   free (arr);
 }
