@@ -17,12 +17,13 @@ bool countChar(char * filename, int * counts, int size)
   }
   // if fopen succeeds, read every character from the file
   int onechar;
+  /*
   do
   {
 	  onechar = fgetc(fptr);
 	  //printf("%c %d\n", onechar, onechar);
   } while (onechar != EOF);
-  
+  */
   int charcount [256] = {0};
   while (! feof(fptr));
   {
