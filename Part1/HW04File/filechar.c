@@ -34,23 +34,28 @@ bool countChar(char * filename, int * counts, int size)
   } while (onechar != EOF);
   */
   //int charcount [256] = {0};
-  while (! feof(fptr));
+  //
+
+  onechar = fgetc(fptr);
+  while (onechar != EOF)
   {
-	onechar = fgetc(fptr);
-	if (onechar != EOF)
+	if (onechar >= 0 && onechar <= (size - 1))
 	{
 		counts[onechar] ++;
-    }
-    printf("%c %d\n", onechar, onechar);
+        }
+	
+	onechar = fgetc(fptr);
+   // printf("%c %d\n", onechar, onechar);
   }  
-  
-  for (onechar = 0; onechar <= size-1; onechar++);
+ /* 
+  for (onechar = 0; onechar < size; onechar++);
   {
 	  if (counts[onechar] !=0)
 	  {
 		  printf("%c occurs %d times\n", onechar, counts[onechar]);
 	  }
   }
+  */
   fclose (fptr);
   
   
@@ -82,5 +87,18 @@ void printCounts(int * counts, int size)
   // onechar is printed if ind is between 'a' and 'z' or
   // 'A' and 'Z'. Otherwise, print space
   // if counts[ind] is zero, do not print
+ 
+int onechar;
+
+  for (onechar = 0; onechar < size; onechar++)
+  {
+	  if (counts[onechar] !=0)
+	  {
+		if ((onechar >= 65 &&  onechar <= 90) || (onechar >= 97 && onechar <= 122)) 
+			printf("%d, %c, %d\n", onechar, onechar, counts[onechar]);
+		else
+			printf("%d,  , %d\n", onechar, counts[onechar]);
+	  }
+  }
 }
 #endif
