@@ -11,12 +11,12 @@ bool countChar(char * filename, int * counts, int size)
   // open a file whose name is filename for reading
   
   // if fopen fails, return false. Do NOT fclose
-  
+ /* 
   if (argc < 2)
   {
 	  return false;
   }
-  
+  */
   FILE * fptr = fopen(filename, "r");
   
   if (fptr == NULL)
@@ -43,12 +43,12 @@ bool countChar(char * filename, int * counts, int size)
     }
     printf("%c %d\n", onechar, onechar);
   }  
-  int ind;
-  for (ind = 0; ind < size; ind++);
+  
+  for (onechar = 0; onechar <= size-1; onechar++);
   {
-	  if (counts[ind] !=0)
+	  if (counts[onechar] !=0)
 	  {
-		  printf("%c occurs %d times\n", ind, counts[ind]);
+		  printf("%c occurs %d times\n", onechar, counts[onechar]);
 	  }
   }
   fclose (fptr);
