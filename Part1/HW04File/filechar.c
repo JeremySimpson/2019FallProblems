@@ -9,8 +9,19 @@
 bool countChar(char * filename, int * counts, int size)
 {
   // open a file whose name is filename for reading
+  FILE * fptr = fopen(filename, "r");
   // if fopen fails, return false. Do NOT fclose
+  if (fptr == NULL)
+  {
+	  return false;
+  }
   // if fopen succeeds, read every character from the file
+  int onechar;
+  do
+  {
+	  onechar = fgetc(fptr);
+	  printf("%c %d\n", onechar, onechar);
+  } while (onechar != EOF);
   //
   // if a character (call it onechar) is between
   // 0 and size - 1 (inclusive), increase
