@@ -46,9 +46,9 @@ bool countChar(char * filename, int * counts, int size)
   int ind;
   for (ind = 0; ind < size; ind++);
   {
-	  if (charcount[ind] !=0)
+	  if (counts[ind] !=0)
 	  {
-		  printf("%c occurs %d times\n", ind, charcount[ind]);
+		  printf("%c occurs %d times\n", ind, counts[ind]);
 	  }
   }
   fclose (fptr);
