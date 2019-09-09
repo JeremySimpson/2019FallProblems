@@ -9,12 +9,21 @@
 bool countChar(char * filename, int * counts, int size)
 {
   // open a file whose name is filename for reading
-  FILE * fptr = fopen(filename, "r");
+  
   // if fopen fails, return false. Do NOT fclose
+  
+  if (argc < 2)
+  {
+	  return false;
+  }
+  
+  FILE * fptr = fopen(filename, "r");
+  
   if (fptr == NULL)
   {
 	  return false;
   }
+  
   // if fopen succeeds, read every character from the file
   int onechar;
   /*
@@ -24,18 +33,18 @@ bool countChar(char * filename, int * counts, int size)
 	  //printf("%c %d\n", onechar, onechar);
   } while (onechar != EOF);
   */
-  int charcount [256] = {0};
+  //int charcount [256] = {0};
   while (! feof(fptr));
   {
 	onechar = fgetc(fptr);
 	if (onechar != EOF)
 	{
-		charcount[onechar] ++;
+		counts[onechar] ++;
     }
-  //printf("%c %d\n", onechar, onechar);
+    printf("%c %d\n", onechar, onechar);
   }  
-  int ind = 0;
-  for (ind = 0; ind < 256; ind++);
+  int ind;
+  for (ind = 0; ind < size; ind++);
   {
 	  if (charcount[ind] !=0)
 	  {
