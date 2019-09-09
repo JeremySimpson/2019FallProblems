@@ -8,97 +8,47 @@
 #ifdef TEST_COUNTCHAR
 bool countChar(char * filename, int * counts, int size)
 {
-  // open a file whose name is filename for reading
-  
-  // if fopen fails, return false. Do NOT fclose
- /* 
-  if (argc < 2)
-  {
-	  return false;
-  }
-  */
-  FILE * fptr = fopen(filename, "r");
-  
-  if (fptr == NULL)
-  {
-	  return false;
-  }
-  
-  // if fopen succeeds, read every character from the file
-  int onechar;
-  /*
-  do
-  {
-	  onechar = fgetc(fptr);
-	  //printf("%c %d\n", onechar, onechar);
-  } while (onechar != EOF);
-  */
-  //int charcount [256] = {0};
-  //
 
-  onechar = fgetc(fptr);
-  while (onechar != EOF)
-  {
-	if (onechar >= 0 && onechar <= (size - 1))
+	FILE * fptr = fopen(filename, "r"); //opens a file named "filename" and reads it
+
+	if (fptr == NULL) //returns FALSE if file cannot be opened
 	{
-		counts[onechar] ++;
-        }
-	
-	onechar = fgetc(fptr);
-   // printf("%c %d\n", onechar, onechar);
-  }  
- /* 
-  for (onechar = 0; onechar < size; onechar++);
-  {
-	  if (counts[onechar] !=0)
-	  {
-		  printf("%c occurs %d times\n", onechar, counts[onechar]);
-	  }
-  }
-  */
-  fclose (fptr);
-  
-  
-  //
-  // if a character (call it onechar) is between
-  // 0 and size - 1 (inclusive), increase
-  // counts[onechar] by one
-  // You should *NOT* assume that size is 256
-  // reemember to call fclose
-  // you may assume that counts already initialized to zero
-  // size is the size of counts
-  // you may assume that counts has enough memory space
-  //
-  // hint: use fgetc
-  // Please read the document of fgetc carefully, in particular
-  // when reaching the end of the file
-  //
-  return true;
+		return false;
+	}
+
+
+	int onechar; //index of character in file
+	onechar = fgetc(fptr); //assigns the character at fptr to onechar
+	while (onechar != EOF) //continues until end of file
+	{
+
+		if (onechar >= 0 && onechar <= (size - 1)) //counts if onechar is within file
+		{
+			counts[onechar] ++; //counts the frequency of the character
+		}
+		onechar = fgetc(fptr); //moves forward in the file
+	}  
+
+	fclose (fptr); //closes the file
+
+	return true; //returns successful
 }
 #endif
 
 #ifdef TEST_PRINTCOUNTS
 void printCounts(int * counts, int size)
-{
-  // print the values in counts in the following format
-  // each line has three items:
-  // ind, onechar, counts[ind]
-  // ind is between 0 and size - 1 (inclusive)
-  // onechar is printed if ind is between 'a' and 'z' or
-  // 'A' and 'Z'. Otherwise, print space
-  // if counts[ind] is zero, do not print
- 
-int onechar;
+{ 
+	int onechar; //initializes counter variable
 
-  for (onechar = 0; onechar < size; onechar++)
-  {
-	  if (counts[onechar] !=0)
-	  {
-		if ((onechar >= 65 &&  onechar <= 90) || (onechar >= 97 && onechar <= 122)) 
-			printf("%d, %c, %d\n", onechar, onechar, counts[onechar]);
-		else
-			printf("%d,  , %d\n", onechar, counts[onechar]);
-	  }
-  }
+	for (onechar = 0; onechar <= size - 1; onechar++) //continues throughout entire document
+	{
+		if (counts[onechar] !=0) //counts if the character appears in document
+		{
+			if (onechar < 65 || (onechar > 90 && onechar < 97) || (onechar > 122)) //prints space if character is not a lowercase or uppercase letter
+				printf("%d,  , %d\n", onechar, counts[onechar]);
+			else //prints letter
+				printf("%d, %c, %d\n", onechar, onechar, counts[onechar]);
+		}
+	}
 }
 #endif
