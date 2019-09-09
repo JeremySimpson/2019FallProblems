@@ -20,15 +20,19 @@ bool countChar(char * filename, int * counts, int size)
   do
   {
 	  onechar = fgetc(fptr);
-	  printf("%c %d\n", onechar, onechar);
+	  //printf("%c %d\n", onechar, onechar);
   } while (onechar != EOF);
   
   int charcount [256] = {0};
   while (! feof(fptr));
   {
-	 charcount[onechar] ++;
-  }
-  printf("%c %d\n", onechar, onechar);  
+	onechar = fgetc(fptr);
+	if (onechar != EOF)
+	{
+		charcount[onechar] ++;
+    }
+  printf("%c %d\n", onechar, onechar);
+  }  
   
   //
   // if a character (call it onechar) is between
