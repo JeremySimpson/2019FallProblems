@@ -31,8 +31,18 @@ bool countChar(char * filename, int * counts, int size)
 	{
 		charcount[onechar] ++;
     }
-  printf("%c %d\n", onechar, onechar);
+  //printf("%c %d\n", onechar, onechar);
   }  
+  int ind = 0;
+  for (ind = 0; ind < 256; ind++);
+  {
+	  if (charcount[ind] !=0)
+	  {
+		  printf("%c occurs %d times\n", ind, charcount[ind]);
+	  }
+  }
+  fclose (fptr);
+  
   
   //
   // if a character (call it onechar) is between
