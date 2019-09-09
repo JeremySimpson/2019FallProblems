@@ -22,6 +22,14 @@ bool countChar(char * filename, int * counts, int size)
 	  onechar = fgetc(fptr);
 	  printf("%c %d\n", onechar, onechar);
   } while (onechar != EOF);
+  
+  int charcount [256] = {0};
+  while (! feof(fptr));
+  {
+	 charcount[onechar] ++;
+  }
+  printf("%c %d\n", onechar, onechar);  
+  
   //
   // if a character (call it onechar) is between
   // 0 and size - 1 (inclusive), increase
