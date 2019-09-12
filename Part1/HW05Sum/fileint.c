@@ -8,6 +8,30 @@
 #ifdef TEST_ADDFILE
 bool addFile(char * filename, int * sum)
 {
+	FILE * fptr = fopen(filename, "r"); //opens a file named "filename" and reads it
+
+	if (fptr == NULL) //returns FALSE if file cannot be opened
+	{
+		return false;
+	}
+	
+	int onechar; //index of character in file
+	
+	int * sum = 0;
+	while (fscanf(fptr,"%*d", sum) == 1) //assigns the character at fptr to onechar
+		fprintf("%d\n", sum);
+	/*
+	while (onechar != EOF) //continues until end of file
+	{
+
+		if (onechar >= 0 && onechar <= (size - 1)) //counts if onechar is within file
+		{
+			counts[onechar] ++; //counts the frequency of the character
+		}
+		onechar = fgetc(fptr); //moves forward in the file
+	}  
+	*/
+	fclose (fptr); //closes the file
   // You cannot assume * sum is zero. Thus, * sum needs to be set 0
   // open a file whose name is filename for reading
   // if fopen fails, return false. Do NOT fclose
