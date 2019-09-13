@@ -15,11 +15,22 @@ bool addFile(char * filename, int * sum)
 		return false;
 	}
 	
-	int onechar; //index of character in file
+	//int onechar; //index of character in file
 	
-	int * sum = 0;
-	while (fscanf(fptr,"%*d", sum) == 1) //assigns the character at fptr to onechar
-		fprintf("%d\n", sum);
+	* sum = 0;
+	int sumtemp = 0;
+	//int sumtotal = 0;
+	//int *sumnum = 0;
+	while ((fscanf(fptr,"%d",&sumtemp) == 1)) //assigns the character at fptr to onechar
+	{
+		
+		*sum += sumtemp;
+		
+		//printf("7gvftm = %d\n", *sum);	
+		//sumtemp = *sumnum;
+	}
+	//printf("sum = %d\n", *sum);	
+			
 	/*
 	while (onechar != EOF) //continues until end of file
 	{
@@ -31,6 +42,7 @@ bool addFile(char * filename, int * sum)
 		onechar = fgetc(fptr); //moves forward in the file
 	}  
 	*/
+	
 	fclose (fptr); //closes the file
   // You cannot assume * sum is zero. Thus, * sum needs to be set 0
   // open a file whose name is filename for reading
@@ -48,6 +60,15 @@ bool addFile(char * filename, int * sum)
 #ifdef TEST_WRITESUM
 bool writeSum(char * filename, int sum)
 {
+	FILE * fptr = fopen(filename, "w");
+	
+	if (fptr == NULL) //returns FALSE if file cannot be opened
+	{
+		return false;
+	}
+	
+        fprintf(fptr, "%d\n", sum);
+	fclose(fptr);
   // open a file whose name is filename for writing
   // if fopen succeeds, write sum as an integer using fprintf
   // fprintf should use one newline '\n'
