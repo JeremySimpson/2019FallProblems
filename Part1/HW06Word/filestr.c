@@ -26,10 +26,11 @@ int countWord(char * filename, char * word, char * line, int size)
   // use fgets to read the file
   while (fgets(line, size, fptr) != NULL)
   {
-	  while (strstr(line, word) != NULL)
+  	char * cptr = line;
+  	while ((cptr = strstr(cptr, word)) != NULL)
 	  {
-		  sum ++;
-		  line = strstr(line, word) + strlen(word);
+		sum ++;
+		cptr += strlen(word);
 	  }
   }
   // if word appears in a line, add one to sum
