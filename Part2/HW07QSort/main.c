@@ -15,8 +15,24 @@ int main(int argc, char * * argv)
   // argv[2]: name of output file
 
   // if argc is not 3, return EXIT_FAILURE
-
+  if (argc != 3)
+	  return EXIT_FAILURE
+  
+  FILE * fptr = fopen(argv[1],"r");
+  if (fptr == NULL)
+	  return EXIT_FAILURE
   // count the number of integers in the file
+  int value;
+  int count = 0;
+  while (fscanf(fptr, "%d", & value) == 1)
+	  count++;
+	  fprintf(stdout, "The file has %d integers \n", count);
+  
+  fclose(fptr);
+  return EXIT_SUCCESS;
+}
+#endif
+  /*
   int numElem = 0;
   numElem = countInt(argv[1]);
 
@@ -35,9 +51,9 @@ int main(int argc, char * * argv)
 
   bool rtv = readInt(argv[1], intArr, numElem);
 
-  if (rtv == false) // read fail
-    {
-  
+  if (rtv == false) //if read fails, return EXIT_FAILURE
+    { 
+
     }
   
   // call qsort using the comparison function you write
@@ -57,4 +73,3 @@ int main(int argc, char * * argv)
   return EXIT_SUCCESS;
 }
 #endif
-
