@@ -16,7 +16,7 @@ int main(int argc, char * * argv)
 
   // if argc is not 3, return EXIT_FAILURE
   if (argc != 3)
-	  return EXIT_FAILURE
+	  return EXIT_FAILURE;
   
   //FILE * fptr = fopen(argv[1],"r");
   //if (fptr == NULL)
@@ -55,7 +55,7 @@ int main(int argc, char * * argv)
   int * intArr = malloc(sizeof(int) * numElem);
   if (intArr == NULL) //malloc fail
   {
-	  fclose(fptr);
+	  //fclose(fptr);
 	  return EXIT_FAILURE;
   }
 
