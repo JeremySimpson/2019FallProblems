@@ -48,7 +48,7 @@ bool readInt(char* filename, int * intArr, int size)
 	  if (fscanf(fptr, "%d", & intArr[ind]) != 1)
 	  {
 		  fclose(fptr);
-		  free(intArr);
+		  //free(intArr);
 		  return false;
 	  }
 	  ind++;
@@ -75,7 +75,7 @@ int compareInt(const void *p1, const void *p2)
   // return an integer less than, equal to, or greater than zero if
   // the first argument is considered to be respectively less than,
   // equal to, or greater than the second.
-  return ( *(int*)a - *(int*)b );
+  return ( *(int*)p1 - *(int*)p2 );
 }
 #endif
 
