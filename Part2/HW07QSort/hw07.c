@@ -9,6 +9,20 @@
 #ifdef TEST_COUNTINT
 int countInt(char * filename)
 {
+	
+  FILE * fptr = fopen(filename,"r");
+  if (fptr == NULL)
+	  return -1;
+  
+  int value;
+  int count = 0;
+  while (fscanf(fptr, "%d", & value) == 1)
+  {
+	  count++;
+	  //fprintf(stdout, "The file has %d integers \n", count);
+  }
+  fclose(fptr);
+  return count;
   // count the number of integers in the file
   // Please notice that if a file contains
   // 124 378 -56
@@ -24,6 +38,22 @@ int countInt(char * filename)
 #ifdef TEST_READINT
 bool readInt(char* filename, int * intArr, int size)
 {
+  FILE * fptr = fopen(filename,"r");
+  if (fptr == NULL)
+	  return false;
+  
+  int ind = 0;
+  while (ind < size)
+  {
+	  if (fscanf(fptr, "%d", & intArr[ind]) != 1)
+	  {
+		  fclose(fptr);
+		  free(intArr);
+		  return false;
+	  }
+	  ind++;
+  }
+  fclose(fptr);
   // if fopen fails, return false
   // read integers from the file.
   // 
@@ -45,6 +75,7 @@ int compareInt(const void *p1, const void *p2)
   // return an integer less than, equal to, or greater than zero if
   // the first argument is considered to be respectively less than,
   // equal to, or greater than the second.
+  return ( *(int*)a - *(int*)b );
 }
 #endif
 
@@ -56,5 +87,13 @@ bool writeInt(char* filename, int * intArr, int size)
   // one integer per line
   // 
   // fclose and return true
+  FILE * fptr = fopen(filename,"w");
+  if (fptr == NULL)
+	  return false;
+  
+  fwrite(intArr, size, sizeof(intArr), fptr);
+  fclose(fptr);
+  
+  return true;
 }
 #endif

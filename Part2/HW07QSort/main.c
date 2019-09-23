@@ -18,21 +18,26 @@ int main(int argc, char * * argv)
   if (argc != 3)
 	  return EXIT_FAILURE
   
-  FILE * fptr = fopen(argv[1],"r");
-  if (fptr == NULL)
-	  return EXIT_FAILURE
+  //FILE * fptr = fopen(argv[1],"r");
+  //if (fptr == NULL)
+	  //return EXIT_FAILURE
+  
   // count the number of integers in the file
+  /*
   int value;
   int count = 0;
   while (fscanf(fptr, "%d", & value) == 1)
+  {
 	  count++;
-	  fprintf(stdout, "The file has %d integers \n", count);
+	  //fprintf(stdout, "The file has %d integers \n", count);
+  }
+  */
   
-  fclose(fptr);
-  return EXIT_SUCCESS;
-}
-#endif
-  /*
+  //fclose(fptr);
+  //return EXIT_SUCCESS;
+//}
+//#endif
+  
   int numElem = 0;
   numElem = countInt(argv[1]);
 
@@ -47,17 +52,22 @@ int main(int argc, char * * argv)
   // 3. check whether allocation succeed
   //    if allocation fails, return EXIT_FAILURE
 
-  int * intArr;
+  int * intArr = malloc(sizeof(int) * numElem);
+  if (intArr == NULL) //malloc fail
+  {
+	  fclose(fptr);
+	  return EXIT_FAILURE;
+  }
 
   bool rtv = readInt(argv[1], intArr, numElem);
 
   if (rtv == false) //if read fails, return EXIT_FAILURE
     { 
-
+	  return EXIT_FAILURE;
     }
   
   // call qsort using the comparison function you write
-  qsort(....);
+  qsort(intArr, numElem, sizeof(int), compareInt);
 
   // write the sorted array to a file whose name is argv[2]
   
@@ -69,7 +79,7 @@ int main(int argc, char * * argv)
     }
 
   // everything is ok, release memory, return EXIT_SUCCESS
-
+  free (intArr);
   return EXIT_SUCCESS;
 }
 #endif
