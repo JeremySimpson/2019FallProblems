@@ -24,7 +24,7 @@ int countVector(char * filename)
   //
   int sum = 0;
   Vector temp;
-  int count = 0;
+ // int count = 0;
   
   while (fread(&temp, sizeof(Vector), 1, fptr) != 0)
   {
@@ -40,7 +40,7 @@ int countVector(char * filename)
 #ifdef TEST_READVECTOR
 bool readVector(char* filename, Vector * vecArr, int size)
 {
-  FILE * fptr = fopen(filename, "r")
+  FILE * fptr = fopen(filename, "r");
   // if fopen fails, return false
   if (fptr == NULL)
 	  return false;
@@ -71,13 +71,36 @@ int compareVector(const void *p1, const void *p2)
   // compare the x attribute first
   // If the first vector's x is less than the second vector's x
   // return -1
-  if (*(int*)p1 < (*(int*)p2)
+  /*
+  if (*(int*)p1 < *(int*)p2)
 	  return -1;
   if (*(int*)p1 > *(int*)p2)
 	  return 1;
   if (*(int*)p1 == *(int*)p2)
+*/
+
+  const Vector * vptr1 = p1;
+  const Vector * vptr2 = p2;
+
+  if (vptr1 -> x < vptr2 -> x)
+    return -1;
+  if (vptr1 -> x > vptr2 -> x)
+    return 1;
+  if (vptr1 -> x == vptr2 -> x)
   {
+    if (vptr1 -> y < vptr2 -> y)
+      return -1;
+    if (vptr1 -> y > vptr2 -> y)
+      return 1;
+    if (vptr1 -> y == vptr2 -> y)
+    {
+      if (vptr1 -> z < vptr2 -> z)
+        return -1;
+      if (vptr1 -> z > vptr2 -> z)
+        return 1;
+    }  
   }
+  return 0;
   // If the first vector's x is greater than the second vector's x
   // return 1
   // If the two vectors' x is the same, compare the y attribute
@@ -99,7 +122,7 @@ int compareVector(const void *p1, const void *p2)
 #ifdef TEST_WRITEVECTOR
 bool writeVector(char* filename, Vector * vecArr, int size)
 {
-  FILE * fptr = fopen(filename, "r")
+  FILE * fptr = fopen(filename, "r");
   // if fopen fails, return false
   if (fptr == NULL)
 	  return false;
