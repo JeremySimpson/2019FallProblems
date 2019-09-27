@@ -27,7 +27,7 @@ int main(int argc, char * * argv)
   if (numVec <= 0)
 	  return EXIT_FAILURE;
   // otherwise, allocate memory for an array of vectors
-  int * vecArr = malloc(sizeof(Vector) * numVec);
+  Vector * vecArr = malloc(sizeof(Vector) * numVec);
   if (vecArr == NULL)
 	  return EXIT_FAILURE;
   bool rtv = readVector(argv[1], vecArr, numVec);
