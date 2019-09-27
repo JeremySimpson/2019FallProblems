@@ -55,7 +55,7 @@ int main(int argc, char * * argv)
 
   // write the sorted array to the file whose name is argv[2]
   // if writing fails, release memory and return EXIT_FAILURE
-  rtv = writeInt(argv[2], vecArr, numVec);
+  rtv = writeVector(argv[2], vecArr, numVec);
   if (rtv == false)
   {
 	  free (vecArr);
