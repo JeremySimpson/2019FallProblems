@@ -33,7 +33,7 @@ int main(int argc, char * * argv)
 
   // call mergeSort
   // be careful about the arguments
-  mergeSort(....);
+  mergeSort(arr, 0, size - 1);
 
 
   // write results to the output file
