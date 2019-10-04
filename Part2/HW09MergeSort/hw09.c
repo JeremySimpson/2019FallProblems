@@ -40,7 +40,7 @@ bool readData(char * filename, int * * arr, int * size)
   // check whether fseek fails
   // if fseek fails, fclose and return false
 
-  seekStat = fseek(fptr, 0, SEEK_END);
+  int seekStat = fseek(fptr, 0, SEEK_END);
   
   if (seekStat != 0)
   {
@@ -49,12 +49,12 @@ bool readData(char * filename, int * * arr, int * size)
   }
   
   // use ftell to determine the size of the file
-  size = ftell(fptr);
+  * size = ftell(fptr);
 
   // use fseek to go back to the beginning of the file
   // check whether fseek fails
   
-  seekStat = fseek(fptr, size, SEEK_SET);
+  seekStat = fseek(fptr, 0, SEEK_SET);
   // if fseek fails, fclose and return false
   
   if (seekStat != 0)
@@ -66,7 +66,7 @@ bool readData(char * filename, int * * arr, int * size)
   // the number of integers is the file's size divided by
   // size of int  
   
-  numInt = size / sizeof(int);
+  int numInt = *size / sizeof(int);
  
   // allocate memory for the array
   
@@ -83,7 +83,7 @@ bool readData(char * filename, int * * arr, int * size)
 
   // use fread to read the number of integers in the file
 
-  readStat = fread(arr, sizeof(int), numInt, fptr);
+  int readStat = fread(* arr, sizeof(int), numInt, fptr);
   
   // if fread does not read the correct number
   // release allocated memory
@@ -100,16 +100,12 @@ bool readData(char * filename, int * * arr, int * size)
   // if fread succeeds
   // close the file
   fclose(fptr);
-
-  
+ 
   // update the argument for the array address
-
-
-  
+ 
   // update the size of the array
-  size = numInt;
+  * size = numInt;
 
-  
   return true;
 }
 #endif
@@ -129,7 +125,7 @@ bool writeData(char * filename, const int * arr, int size)
 	  return false;
 
   // use fwrite to write the entire array to a file
-  numWrite = fwrite(arr, sizeof(int), size, fptr);
+  int numWrite = fwrite(arr, sizeof(int), size, fptr);
   
   // check whether all elements of the array have been written
   // fclose
@@ -142,6 +138,7 @@ bool writeData(char * filename, const int * arr, int size)
  
   // if all elements have been written, return true
 
+  fclose(fptr);
   return true;
 
 
@@ -149,6 +146,7 @@ bool writeData(char * filename, const int * arr, int size)
 }
 #endif
 
+// ************************** JS *********************
 
 #ifdef TEST_MERGE
 // input: arr is an array and its two parts arr[l..m] and arr[m+1..r]
@@ -174,61 +172,64 @@ static void merge(int * arr, int l, int m, int r)
 #endif
 
   // if one or both of the arrays are empty, do nothing
-  int i;
-  int j;
-  int k;
-  if ((l == m) && (m == r))
+  int first = l;
+  int middle = m+1;
+  int counter;
+  if (((m+1) > r) || (m < l))
 	  return;
   
   int num1;
-  int num2;
   
-  int num1 = m - l + 1;
-  int num2 = r - m;
+  num1 = (r - l) + 1;
 
-
-
+  int * tempArr = malloc(sizeof(int) * num1);
+ 
 
   // Hint: you may consider to allocate memory here.
   // Allocating additiional memory makes this function easier to write
 
-  int L[num1], R[num2];
   
-  for (i = 0; i < num1; i++)
-    L[i] = arr[l+i];
-  for (j = 0; j < num2; j++)
-	  R[j] = arr[m+1+j];
-
-  i = 0;
-  j = 0;
-  k = l;
   
-  while (i < num1)
+  for (counter = 0; counter < num1; counter++)
   {
-	  arr[k] = L[i];
-	  i++;
-	  k++;
+    if (first > m)
+    {
+      tempArr[counter] = arr[middle];
+      middle++;
+    }
+    
+    else if (middle > r)
+    {
+      tempArr[counter] = arr[first];
+      first++;
+    }
+    
+    else if (arr[first] < arr[middle])
+    {
+      tempArr[counter] = arr[first];
+      first++;
+    }
+    
+    else if (arr[middle] <= arr[first]) 
+    {
+      tempArr[counter] = arr[middle];
+      middle++;
+    }
   }
-  
-  while (j < num2)
+
+   
+  int counter2;
+
+  for (counter2 = l; counter2 <= r; counter2++)
   {
-    arr[k] = R[j];
-	j++;
-	k++;
+    arr[counter2] = tempArr[counter2 - l];
   }
 
 
   // merge the two parts (each part is already sorted) of the array
   // into one sorted array
-
+  free(tempArr);
   
-
-
-
-
-  
-
-
   // the following should be at the bottom of the function
 #ifdef DEBUG
   // Do not modify this part between #ifdef DEBUG and #endif
@@ -257,13 +258,13 @@ void mergeSort(int arr[], int l, int r)
 #endif
 
   // if the array has no or one element, do nothing
- if ((l == r) || (l == (r-1)))
+ if ((l == r) || (r < l))
 	 return;
  
   // divide the array into two arrays
   if (l < r)
   {
-	  int m = 1 + (r-1)/2;
+	  int m = l + (r-l)/2;
 	  
   // call mergeSort with each array
   mergeSort(arr, l, m);
@@ -273,11 +274,6 @@ void mergeSort(int arr[], int l, int r)
   merge(arr, l, m, r);
   }
   
-  
-  
-
-
-
-
 } 
 #endif
+
