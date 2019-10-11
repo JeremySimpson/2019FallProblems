@@ -31,6 +31,16 @@ static void printDeck(CardDeck deck)
 // cards from the bottom of the original deck.
 void divide(CardDeck origDeck, CardDeck * leftDeck, CardDeck * rightDeck)
 {
+  int counter;
+  for (counter = 0; counter < origDeck.size - 1; counter++)
+  {
+    leftDeck[counter].size = counter + 1;
+    rightDeck[counter].size = origDeck.size - (counter + 1);  
+    memcpy(leftDeck[counter].cards, origDeck.cards, leftDeck[counter].size * sizeof(leftDeck[counter].cards[0]));
+    memcpy(rightDeck[counter].cards, origDeck.cards + leftDeck[counter].size, rightDeck[counter].size * sizeof(rightDeck[counter].cards[0]));
+  }
+  
+  
 }
 #endif
 
@@ -76,9 +86,74 @@ void divide(CardDeck origDeck, CardDeck * leftDeck, CardDeck * rightDeck)
 // function, please keep it inside #ifdef TEST_INTERLEAVE and #endif
 // so that the function can be removed for grading other parts of the
 // program.
+void helper(CardDeck leftDeck, CardDeck rightDeck, CardDeck outputDeck, int posL, int posR)
+{
+		
+	if (posL == leftDeck.size && posR == rightDeck.size)
+	{
+		printDeck(outputDeck);
+		return;
+	}
+	
+	if (posL < leftDeck.size || posR < rightDeck.size)
+	{
+		if (posL < leftDeck.size)
+		{
+			outputDeck.cards[posL + posR] = leftDeck.cards[posL];
+			//posL++;
+			helper(leftDeck, rightDeck, outputDeck, posL+1, posR);
+		}
+		if (posR < rightDeck.size)
+		{
+			outputDeck.cards[posL + posR] = rightDeck.cards[posR];
+			//posR++;
+			helper(leftDeck, rightDeck, outputDeck, posL, posR+1);
+		}
+	}
+		 
+			
+	/*
+	if(posL < leftDeck.size && posR == rightDeck.size)
+	{
+		outputDeck.cards[posL + posR] = leftDeck.cards[posL];
+		//posL++;
+		helper(leftDeck, rightDeck, outputDeck, posL+1, posR); 
+	}
+	if(posR < rightDeck.size && posL == leftDeck.size)
+	{
+		outputDeck.cards[posL + posR] = rightDeck.cards[posR];
+		//posR++;
+		helper(leftDeck, rightDeck, outputDeck, posL, posR+1);
+	}
+	if (posL < leftDeck.size && posR < rightDeck.size)
+	{
+		outputDeck.cards[posL + posR] = leftDeck.cards[posL];
+		//posL++;
+		helper(leftDeck, rightDeck, outputDeck, posL+1, posR);
+		outputDeck.cards[posL + posR] = rightDeck.cards[posR];
+		//posR++;
+		helper(leftDeck, rightDeck, outputDeck, posL, posR+1);
+	}
+	*/	
+
+}
 void interleave(CardDeck leftDeck, CardDeck rightDeck)
 {
+	
+	//int counter;
+	int posL = 0;
+	int posR = 0;
+	int totalCards = leftDeck.size + rightDeck.size;
+	CardDeck outputDeck = 
+	{
+		.size = totalCards,
+		.cards = {0}
+	};
+ 
+	helper(leftDeck, rightDeck, outputDeck, posL, posR);
+
 }
+
 #endif
 
 #ifdef TEST_SHUFFLE
@@ -97,5 +172,21 @@ void interleave(CardDeck leftDeck, CardDeck rightDeck)
 //
 void shuffle(CardDeck origDeck)
 {
+	int numPossDeck = origDeck.size - 1;
+	int counter = 0;
+
+	CardDeck * leftDeck = malloc(sizeof(CardDeck) *numPossDeck);
+	CardDeck * rightDeck = malloc(sizeof(CardDeck) * numPossDeck);
+
+	divide(origDeck, leftDeck, rightDeck);
+        while (counter < numPossDeck)
+        {
+		interleave(leftDeck[counter], rightDeck[counter]);
+		counter++;
+	}
+
+	free(leftDeck);
+	free(rightDeck); 		
+	
 }
 #endif
