@@ -88,31 +88,12 @@ void divide(CardDeck origDeck, CardDeck * leftDeck, CardDeck * rightDeck)
 // program.
 void helper(CardDeck leftDeck, CardDeck rightDeck, CardDeck outputDeck, int posL, int posR)
 {
-		
 	if (posL == leftDeck.size && posR == rightDeck.size)
 	{
 		printDeck(outputDeck);
 		return;
 	}
-	
-	if (posL < leftDeck.size || posR < rightDeck.size)
-	{
-		if (posL < leftDeck.size)
-		{
-			outputDeck.cards[posL + posR] = leftDeck.cards[posL];
-			//posL++;
-			helper(leftDeck, rightDeck, outputDeck, posL+1, posR);
-		}
-		if (posR < rightDeck.size)
-		{
-			outputDeck.cards[posL + posR] = rightDeck.cards[posR];
-			//posR++;
-			helper(leftDeck, rightDeck, outputDeck, posL, posR+1);
-		}
-	}
-		 
-			
-	/*
+
 	if(posL < leftDeck.size && posR == rightDeck.size)
 	{
 		outputDeck.cards[posL + posR] = leftDeck.cards[posL];
@@ -134,7 +115,7 @@ void helper(CardDeck leftDeck, CardDeck rightDeck, CardDeck outputDeck, int posL
 		//posR++;
 		helper(leftDeck, rightDeck, outputDeck, posL, posR+1);
 	}
-	*/	
+		
 
 }
 void interleave(CardDeck leftDeck, CardDeck rightDeck)
