@@ -31,6 +31,32 @@ void printListNode(ListNode * head)
 // return the head of the linked listn
 ListNode * createList(int valn)
 {
+    int count;
+    ListNode * temp1;
+    ListNode * head = NULL;
+    ListNode * temp2;
+    //head->value = 0;
+    //head->next = NULL;
+    //temp = head;
+    
+    for (count = 0; count < valn; count++)
+    {
+        ListNode * temp1 = malloc(sizeof(ListNode));
+        temp1->value = count;
+        temp1->next = NULL;
+        if (head == NULL)
+        {
+            head = temp1;
+        }
+        else
+        {
+            temp2->next = temp1;
+        }
+        temp2 = temp1;
+    }
+    temp2->next = head;
+    free(temp1);   
+    return head;
 }
 #endif
 
@@ -51,6 +77,23 @@ void eliminate(ListNode * head, int valk)
   ListNode * todelete = p;
   printListNode (todelete); 
 #endif
+  ListNode * temp;
+    int count;
+ 
+    temp = head;
+    while (head->next != head)
+    {
+        for (count = 0; count < valk - 1; count++)
+        {
+            temp = head;
+            head = head->next;
+        }
+        head = deleteNode(head,temp);
+    }
+    
+    printf("%d\n",head->value);
+    free(head);
+    return;
 }
 #endif
 
@@ -71,6 +114,27 @@ void eliminate(ListNode * head, int valk)
 // the head). If this occurs, return the second node of the list.
 ListNode * deleteNode(ListNode * head, ListNode * todelete)
 {
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    
+    if (todelete == NULL)
+    {
+        return head;
+    }
+    
+    if (todelete == head)
+    {
+        return (head + sizeof(ListNode));
+    }
+    
+    todelete->next = head->next;
+    printf("%d\n", head->value);
+    free(head);
+    head = todelete->next;
+    
+    return head;
 }
 #endif
 
