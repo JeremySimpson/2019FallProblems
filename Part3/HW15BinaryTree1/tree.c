@@ -61,7 +61,47 @@ void preOrder(Tree * tr, char * filename)
 // Consider the algorithm posted on
 // https://www.geeksforgeeks.org/construct-a-binary-tree-from-postorder-and-inorder/
 
+TreeNode* newNode = (int value)
+{
+  TreeNode * node = (TreeNode*)malloc(sizeof(Treenode));
+  node -> value = value;
+  node -> right = NULL;
+  node -> left = node -> right;
+  return (node);
+}
+
+int search (int * in, int first, int last, int value)
+{
+  int i;
+  for (i = first; i <= last, i++)
+  {
+    if (in[i] == value)
+      break;
+  }
+  return i;
+}
+
+
+TreeNode* buildHelper(int * in, int * post, int first, int last, int * postIndex)
+{
+  if (first > last)
+    return NULL;
+  TreeNode * node = newNode(post[*postIndex]);
+  (*postIndex)--;
+
+  if (first == last)
+    return node;
+  int indexVal = search(in, first, last, node->value);
+
+  node->right = buildHelper(in, post, indexVal + 1, last, postIndex);
+  node->left = buildHelper(in, post, first, indexVal - 1, postIndex);
+  
+  return node;
+
 Tree * buildTree(int * inArray, int * postArray, int size)
 {
+  int postIndex = size - 1;
+  return buildHelper(inArray, postArray, 0, size-1, &postIndex);
+
 }
 #endif
