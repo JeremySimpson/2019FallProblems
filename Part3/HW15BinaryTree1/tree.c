@@ -61,47 +61,54 @@ void preOrder(Tree * tr, char * filename)
 // Consider the algorithm posted on
 // https://www.geeksforgeeks.org/construct-a-binary-tree-from-postorder-and-inorder/
 
-TreeNode* newNode = (int value)
+TreeNode* newNode(int value)
 {
-  TreeNode * node = (TreeNode*)malloc(sizeof(Treenode));
-  node -> value = value;
-  node -> right = NULL;
-  node -> left = node -> right;
-  return (node);
+  TreeNode * addedNode = (TreeNode*)malloc(sizeof(TreeNode));
+  addedNode -> value = value;
+  addedNode -> right = NULL;
+  addedNode -> left = NULL;
+  return (addedNode);
 }
 
-int search (int * in, int first, int last, int value)
+int search (int * inArray, int first, int last, int value)
 {
   int i;
-  for (i = first; i <= last, i++)
+  int index;
+  for (i = first; i <= last; i++)
   {
-    if (in[i] == value)
-      break;
+    if (inArray[i] == value)
+      index = i;
   }
-  return i;
+  return index;
 }
 
 
-TreeNode* buildHelper(int * in, int * post, int first, int last, int * postIndex)
+TreeNode* buildHelper(int * inArray, int * postArray, int first, int last, int * postIndex)
 {
   if (first > last)
     return NULL;
-  TreeNode * node = newNode(post[*postIndex]);
+
+  TreeNode * addedNode = newNode(postArray[*postIndex]);
   (*postIndex)--;
 
   if (first == last)
-    return node;
-  int indexVal = search(in, first, last, node->value);
+    return addedNode;
 
-  node->right = buildHelper(in, post, indexVal + 1, last, postIndex);
-  node->left = buildHelper(in, post, first, indexVal - 1, postIndex);
+  int indexVal = search(inArray, first, last, addedNode->value);
+
+  addedNode->right = buildHelper(inArray, postArray, indexVal + 1, last, postIndex);
+  addedNode->left = buildHelper(inArray, postArray, first, indexVal - 1, postIndex);
   
-  return node;
+  return addedNode;
+}
 
 Tree * buildTree(int * inArray, int * postArray, int size)
 {
+  Tree * tr = malloc(sizeof(Tree));
   int postIndex = size - 1;
-  return buildHelper(inArray, postArray, 0, size-1, &postIndex);
+  tr -> root = buildHelper(inArray, postArray, 0, size-1, &postIndex);
+
+  return tr;
 
 }
 #endif
