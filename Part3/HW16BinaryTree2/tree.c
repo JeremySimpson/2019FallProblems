@@ -89,7 +89,7 @@ Tree * buildTree(int * inArray, int * postArray, int size)
 #endif
 
 #ifdef TEST_PRINTPATH
-printPathHelper(TreeNode* node, int val, int tempArray[], int pathIndex)
+void printPathHelper(TreeNode* node, int val, int tempArray[], int pathIndex)
 {
   if (node == NULL)
     return;
@@ -105,12 +105,10 @@ printPathHelper(TreeNode* node, int val, int tempArray[], int pathIndex)
   }
 
   pathIndex++;
-
-  else
-  {
-    printPathHelper(node->left, val, tempArray, pathIndex);
-    printPathHelper(node->right, val, tempArray, pathIndex);
-  } 
+  printPathHelper(node->left, val, tempArray, pathIndex);
+  printPathHelper(node->right, val, tempArray, pathIndex);
+  
+  
 }
 
 void printPath(Tree * tr, int val)
